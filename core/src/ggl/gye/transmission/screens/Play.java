@@ -32,6 +32,7 @@ import ggl.gye.transmission.entities.Crono;
 import ggl.gye.transmission.entities.NPC;
 import ggl.gye.transmission.entities.Player;
 import ggl.gye.transmission.entities.PlayerState;
+import ggl.gye.transmission.entities.Tinder;
 
 /**
  * Created by dell on 10/04/17.
@@ -40,10 +41,11 @@ import ggl.gye.transmission.entities.PlayerState;
 public class Play implements InputProcessor, Screen {
     private static final int CAM_SIZE_X = 450;
     private static final int CAM_SIZE_Y = 350;
-    private static final int NUM_NPC = 30;
+    private static final int NUM_NPC = 0;
     private static final int posIniX = 20*32, posIniY = 23*32, wPlayer = 25, hPlayer = 30;
     private static final int wBanner = 370, hBanner= 70;
-    private static final int RADIO = 25;
+    private static final int wTinder= 250, hTinder= 200;
+    private static final int RADIO = 32*3;
     private final String name_map;
 
     private TiledMap map;
@@ -79,6 +81,7 @@ public class Play implements InputProcessor, Screen {
     private Skin touchpadSkin;
     private Array<TiledMapTileLayer> collisionLayers;
     private Banner imageBanner;
+    private Tinder imageTinder;
     private Crono crono;
     private int radio;
 
@@ -112,6 +115,9 @@ public class Play implements InputProcessor, Screen {
         //create banner
         imageBanner = new Banner(new Texture(Gdx.files.internal("badlogic.jpg")), crono);
         imageBanner.setSize(wBanner,hBanner);
+
+        imageTinder = new Tinder(new Texture(Gdx.files.internal("badlogic.jpg")), crono);
+        imageTinder.setSize(wTinder,hTinder);
 
 
 
@@ -222,16 +228,20 @@ public class Play implements InputProcessor, Screen {
         renderer.getBatch().end();
 
         imageBanner.drawBanner(renderer.getBatch(), player.getX(), player.getY());
+        imageTinder.drawTinder(renderer.getBatch(), player.getX(), player.getY());
 
+        //Gdx.input.getX()
+        //(Gdx.input.isTouched()
         if(Gdx.input.isTouched()){
+            System.out.println( Gdx.input.getX());
             camera.position.set(player.getX(), player.getY(), 0);
         }
 
-        if (crono.getNuSeg() % 2 == 0){
+        if (crono.getNuSeg() % 1 == 0){
             for (int i = 0; i < npcList.size(); i++){
                 if (inArea(npcList.get(i).getX(), npcList.get(i).getY())){
                     npc_around.add(i);
-                    System.out.println("id: " + i);
+                    System.out.println("El personaje " + i + " esta cerca");
                 }
             }
         }
@@ -243,10 +253,10 @@ public class Play implements InputProcessor, Screen {
     * */
     private boolean inArea(float x, float y){
         //if((Math.pow(x - player.getX(),2) + Math.pow(y - player.getY(),2) ) <= radio)
-        float a = (Math.abs(player.getX() - x));
-        float b = (Math.abs(player.getY() - y));
+        float a = Math.abs(player.getX() - x);
+        float b = Math.abs(player.getY() - y);
         if ( a <= RADIO &&  b <= RADIO  ) {
-            System.out.println("A: " + a + " , B: " + b);
+            //System.out.println("diferencia: " + (a-b));
             return true;
         }
         return false;
@@ -297,7 +307,8 @@ public class Play implements InputProcessor, Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        System.out.println("screenX: " + screenX + " - screenY: " + screenY + " - pointer: " + pointer + " - button: " + button);
+        return true;
     }
 
     @Override

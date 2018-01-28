@@ -1,6 +1,7 @@
 package ggl.gye.transmission.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Hashtable;
 
-public class Player {
+public class Player implements InputProcessor{
 
     private static float CONST = 2;
     /** the movement velocity */
@@ -111,7 +112,7 @@ public class Player {
         moveCharacterX(x, y);
         for (TiledMapTileLayer collision: collisionLayers) {
             collisionLayer = collision;
-            System.out.println(collisionLayer.toString());
+            //System.out.println(collisionLayer.toString());
             collisionCharacterY();
             collisionCharacterX();
         }
@@ -421,5 +422,46 @@ public class Player {
     private void setPosition(float x, float y) {
         this.pointX = x;
         this.pointY = y;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("screenX: " + screenX + " - screenY: " + screenY + " - pointer: " + pointer + " - button: " + button);
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

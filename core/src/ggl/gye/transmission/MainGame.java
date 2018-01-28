@@ -13,7 +13,7 @@ public class MainGame extends Game {
 	private Screen screen;
 	@Override
 	public void create () {
-		setScreen(new Play("ggjcity"));
+		setScreen(new Play("eltroestedeaquiveras"));
 	}
 
 	@Override

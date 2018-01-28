@@ -134,6 +134,8 @@ public class NPC {
 
         batch.draw(currentFrame, pointX, pointY, width, height);
 
+        //batch.draw();
+
         batch.end();
 
 
