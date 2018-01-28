@@ -49,8 +49,13 @@ public class NPC {
     private int seg_wait;
     private boolean izquierda, derecha, arriba, abajo;
 
+    private boolean infectado = false;
+    private NPCState probabilidad;
+    private boolean definitivamente_infectado = false;
+
     public NPC(String name, int pointX, int pointY, int width, int height,
-               Hashtable<String, Animation> animation, Array<TiledMapTileLayer> collisionLayer, int wMap, int hMap, int wCam, int hCam, Crono crono, int seg_wait) {
+               Hashtable<String, Animation> animation, Array<TiledMapTileLayer> collisionLayer, int wMap, int hMap, int wCam, int hCam, Crono crono, int seg_wait,
+                NPCState probabilidad) {
         //super((TextureRegion) animation.get("still").getKeyFrame(0));
         this.wMap = wMap;
         this.hMap = hMap;
@@ -69,7 +74,7 @@ public class NPC {
         this.crono = crono;
         this.seg_wait = seg_wait;
 
-
+        this.probabilidad = probabilidad;
         stateTime = 0f;
     }
 
@@ -419,5 +424,36 @@ public class NPC {
     private void setPosition(float x, float y) {
         this.pointX = x;
         this.pointY = y;
+    }
+
+    public boolean getDefinitivamenteInfectado(){
+        return this.definitivamente_infectado;
+    }
+
+    public void setInfectado(){
+        if (!this.definitivamente_infectado) {
+            int max=0, min=0;
+            if (probabilidad.equals(NPCState.HIGH)) {
+                max = 1;
+            } else {
+                if (probabilidad.equals(NPCState.MEDIUM)) {
+                    max = 2;
+                } else {
+                    if (probabilidad.equals(NPCState.LOW)) {
+                        max = 3;
+                    }
+                }
+            }
+            int result = min + (int) (Math.random() * ((max - min) + 1));
+            if (result == 0)
+                this.infectado = true;
+            else
+                this.infectado = false;
+            this.definitivamente_infectado = true;
+        }
+    }
+
+    public boolean getInfectado(){
+        return this.infectado;
     }
 }

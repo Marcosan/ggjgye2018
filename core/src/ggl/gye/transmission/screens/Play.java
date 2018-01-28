@@ -31,6 +31,7 @@ import java.util.Hashtable;
 import ggl.gye.transmission.entities.Banner;
 import ggl.gye.transmission.entities.Crono;
 import ggl.gye.transmission.entities.NPC;
+import ggl.gye.transmission.entities.NPCState;
 import ggl.gye.transmission.entities.Player;
 import ggl.gye.transmission.entities.PlayerState;
 import ggl.gye.transmission.entities.Tinder;
@@ -42,11 +43,13 @@ import ggl.gye.transmission.entities.Tinder;
 public class Play implements Screen {
     private static final int CAM_SIZE_X = 450;
     private static final int CAM_SIZE_Y = 350;
-    private static final int NUM_NPC = 0;
+    private static final int NUM_NPC = 30;
     private static final int posIniX = 50, posIniY = 50, wPlayer = 25, hPlayer = 30;
     private static final int wBanner = 370, hBanner= 70;
     private static final int wTinder= 250, hTinder= 200;
+    private static final int wIcon= 15, hIcon= 15;
     private static final int RADIO = 32*3;
+    private static final int SEC_SEARCH = 32*3;
     private final String name_map;
 
     private TiledMap map;
@@ -71,6 +74,7 @@ public class Play implements Screen {
     //NPCs
     private ArrayList<NPC> npcList;
     private ArrayList<Integer> npc_around;
+    private ArrayList<Integer> npc_definitivamente_infectados;
 
     //TouchPad
     private TouchpadStyle touchpadStyle;
@@ -82,7 +86,7 @@ public class Play implements Screen {
     private Skin touchpadSkin;
     private Array<TiledMapTileLayer> collisionLayers;
 
-    private Image button;
+    private Image button, icon_status, icon_infect;
     private Banner imageBanner;
     private Tinder imageTinder;
     private Crono crono;
@@ -90,6 +94,7 @@ public class Play implements Screen {
 
     private String goToScreen = "general";
     private boolean isAuthorized = false;
+    private NPCState local_probability;
 
     public Play(String name) {
         this.name_map = name;
@@ -114,6 +119,7 @@ public class Play implements Screen {
 
         npcList = new ArrayList<NPC>(NUM_NPC);
         npc_around = new ArrayList<Integer>();
+        npc_definitivamente_infectados = new ArrayList<Integer>();
 
         crono=new Crono();
         crono.start();
@@ -125,7 +131,11 @@ public class Play implements Screen {
         imageTinder = new Tinder(new Texture(Gdx.files.internal("badlogic.jpg")), crono);
         imageTinder.setSize(wTinder,hTinder);
 
+        icon_status = new Image(new Texture(Gdx.files.internal("img/tinder/status1.png")));
+        icon_status.setSize(wIcon, hIcon);
 
+        icon_infect = new Image(new Texture(Gdx.files.internal("img/tinder/infectado.png")));
+        icon_infect.setSize(wIcon, hIcon);
 
         playerAtlas = new TextureAtlas("img/player.pack");
         Hashtable<String, Animation> animation = new Hashtable<String, Animation>();
@@ -156,7 +166,8 @@ public class Play implements Screen {
 
         for (int i = 0; i < NUM_NPC; i++){
             npcList.add(i, new NPC("npc" + i, posIniX, posIniY, wPlayer, hPlayer,
-                    animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2+i));
+                    animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2+i,
+                    NPCState.MEDIUM));
         }
         createTouchpad();
     }
@@ -231,9 +242,7 @@ public class Play implements Screen {
         stage.act();
         stage.draw();
 
-        renderer.getBatch().begin();
 
-        renderer.getBatch().end();
 
         imageBanner.drawBanner(renderer.getBatch(), player.getX(), player.getY());
         imageTinder.drawTinder(renderer.getBatch(), player.getX(), player.getY());
@@ -249,25 +258,49 @@ public class Play implements Screen {
                 }
             camera.position.set(player.getX(), player.getY(), 0);
         }
+        renderer.getBatch().begin();
 
         if (crono.getNuSeg() % 1 == 0){
             for (int i = 0; i < npcList.size(); i++){
-                if (inArea(npcList.get(i).getX(), npcList.get(i).getY())){
+                float x_npc = npcList.get(i).getX();
+                float y_npc = npcList.get(i).getY();
+
+                if (npcList.get(i).getInfectado()){
+                    icon_infect.draw(renderer.getBatch(), 1);
+                    icon_infect.setBounds(x_npc + 28, y_npc, wIcon, hIcon);
+                }
+
+
+                if (inArea(player.getX(), player.getY(), x_npc, y_npc)){
                     npc_around.add(i);
-                    System.out.println("El personaje " + i + " esta cerca");
+                    //System.out.println("El personaje " + i + " esta cerca");
+                    icon_status.draw(renderer.getBatch(), 1);
+                    icon_status.setBounds(x_npc + 28, y_npc + 30, wIcon, hIcon);
                 }
             }
         }
+
+        if (crono.getNuSeg() % 5 == 0){
+            int max=npc_around.size()-1;
+            int min=0;
+            int result = min + (int)(Math.random() * ((max - min) + 1));
+            NPC tmp_npc = npcList.get(npc_around.get(result));
+            if (!tmp_npc.getDefinitivamenteInfectado()){
+                tmp_npc.setInfectado();
+            }
+
+        }
+        renderer.getBatch().end();
 
     }
 
     /*
     *   Funcion de circunferencia
     * */
-    private boolean inArea(float x, float y){
+    private boolean inArea(float x_center, float y_center, float x_around, float y_around){
         //if((Math.pow(x - player.getX(),2) + Math.pow(y - player.getY(),2) ) <= radio)
-        float a = Math.abs(player.getX() - x);
-        float b = Math.abs(player.getY() - y);
+        float a = Math.abs(x_center - x_around);
+        float b = Math.abs(y_center - y_around);
         if ( a <= RADIO &&  b <= RADIO  ) {
             //System.out.println("diferencia: " + (a-b));
             return true;

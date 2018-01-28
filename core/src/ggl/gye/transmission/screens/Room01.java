@@ -29,6 +29,7 @@ import java.util.Hashtable;
 import ggl.gye.transmission.entities.Banner;
 import ggl.gye.transmission.entities.Crono;
 import ggl.gye.transmission.entities.NPC;
+import ggl.gye.transmission.entities.NPCState;
 import ggl.gye.transmission.entities.Player;
 import ggl.gye.transmission.entities.PlayerState;
 import ggl.gye.transmission.entities.Tinder;
@@ -154,7 +155,8 @@ public class Room01 implements Screen {
 
         for (int i = 0; i < NUM_NPC; i++){
             npcList.add(i, new NPC("npc" + i, posIniX, posIniY, wPlayer, hPlayer,
-                    animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2+i));
+                    animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2+i,
+                    NPCState.HIGH));
         }
         createTouchpad();
     }
