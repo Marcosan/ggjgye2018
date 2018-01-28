@@ -1,7 +1,6 @@
 package ggl.gye.transmission.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -39,11 +37,11 @@ import ggl.gye.transmission.entities.Tinder;
  * Created by dell on 10/04/17.
  */
 
-public class Play implements Screen {
+public class Room01 implements Screen {
     private static final int CAM_SIZE_X = 450;
     private static final int CAM_SIZE_Y = 350;
     private static final int NUM_NPC = 0;
-    private static final int posIniX = 50, posIniY = 50, wPlayer = 25, hPlayer = 30;
+    private static final int posIniX = 100, posIniY = 100, wPlayer = 25, hPlayer = 30;
     private static final int wBanner = 370, hBanner= 70;
     private static final int wTinder= 250, hTinder= 200;
     private static final int RADIO = 32*3;
@@ -88,10 +86,10 @@ public class Play implements Screen {
     private Crono crono;
     private int radio;
 
-    private String goToScreen = "general";
+    private String goToScreen = "room01";
     private boolean isAuthorized = false;
 
-    public Play(String name) {
+    public Room01(String name) {
         this.name_map = name;
     }
 
@@ -242,10 +240,10 @@ public class Play implements Screen {
         //(Gdx.input.isTouched()
         if(Gdx.input.isTouched()){
             //System.out.println( Gdx.input.getX());
-            if (player.getX() < 40 && player.getX() > 0)
-                if (player.getY() < 40 && player.getY() > 0) {
+            if (player.getX() < 32 && player.getX() > 0)
+                if (player.getY() < 32 && player.getY() > 0) {
                     isAuthorized = true;
-                    goToScreen = "room01";
+                    goToScreen = "general";
                 }
             camera.position.set(player.getX(), player.getY(), 0);
         }
@@ -311,6 +309,7 @@ public class Play implements Screen {
     public boolean canPass(){
         return isAuthorized;
     }
+
 
     public void setCanPass(boolean p){
         this.isAuthorized = p;
