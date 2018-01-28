@@ -1,0 +1,89 @@
+
+girld1-2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+still
+  rotate: false
+  xy: 451, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+still
+  rotate: false
+  xy: 501, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+still
+  rotate: false
+  xy: 551, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 1, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 51, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 101, 0
+  size: 38, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 150, 0
+  size: 40, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 200, 0
+  size: 40, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 250, 0
+  size: 40, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 301, 0
+  size: 39, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 351, 0
+  size: 39, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 401, 0
+  size: 39, 48
+  orig: 10, 10
+  offset: 0, 0
+  index: -1

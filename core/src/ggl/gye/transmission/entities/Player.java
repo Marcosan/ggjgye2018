@@ -18,7 +18,7 @@ public class Player implements InputProcessor{
     /** the movement velocity */
     private Vector2 velocity = new Vector2();
 
-    private float speed = 2 , gravity = 0, increment;
+    private float speed = 4 , gravity = 0, increment;
     private float wPer = 0.3f, hPer = 0.3f;
 
     private boolean canJump=false;

@@ -3,17 +3,32 @@ package ggl.gye.transmission;
 import com.badlogic.gdx.Game;
 
 import ggl.gye.transmission.entities.NPCState;
+import ggl.gye.transmission.screens.Biblioteca;
+import ggl.gye.transmission.screens.Cafeteria;
+import ggl.gye.transmission.screens.Inicio;
 import ggl.gye.transmission.screens.Play;
 import ggl.gye.transmission.screens.Room01;
+import ggl.gye.transmission.screens.Score;
 
 public class MainGame extends Game {
 	private Play playScreen;
 	private Room01 room01Screen;
+	private Cafeteria cafeteriaScreen;
+	private Biblioteca biblioScreen;
+	private Inicio iniScreen;
+	private Score scoreScreen;
+
+
 	private String actualScreen = "general";
 	private boolean canPassScreen = false;
 	@Override
 	public void create () {
-		playScreen = new Play("eltroestedeaquiveras", NPCState.HIGH);
+		playScreen = new Play("Base", NPCState.HIGH);
+		cafeteriaScreen = new Cafeteria("Cafeteria", NPCState.HIGH);
+		biblioScreen = new Biblioteca("Biblio", NPCState.HIGH);
+		iniScreen = new Inicio("Inicio", NPCState.HIGH);
+		scoreScreen = new Score("Score", NPCState.HIGH);
+
 		room01Screen  = new Room01("ggjcity");
 		setScreen(playScreen);
 	}
@@ -37,17 +52,54 @@ public class MainGame extends Game {
 	private void setScreen() throws InterruptedException {
 		if(actualScreen == "general" && canPassScreen){
 			playScreen.setCanPass(false);
-			room01Screen.setCanPass(false);
+			biblioScreen.setCanPass(false);
+			cafeteriaScreen.setCanPass(false);
+			iniScreen.setCanPass(false);
+			scoreScreen.setCanPass(false);
 			canPassScreen = false;
 			setScreen(playScreen);
 		} else {
 
-			if (actualScreen == "room01" && canPassScreen) {
+			if (actualScreen == "biblio" && canPassScreen) {
 				playScreen.setCanPass(false);
-				room01Screen.setCanPass(false);
+				biblioScreen.setCanPass(false);
+				cafeteriaScreen.setCanPass(false);
+				iniScreen.setCanPass(false);
+				scoreScreen.setCanPass(false);
 				canPassScreen = false;
-				setScreen(room01Screen);
+				setScreen(biblioScreen);
+			}else {
+				if (actualScreen == "cafe" && canPassScreen) {
+					playScreen.setCanPass(false);
+					biblioScreen.setCanPass(false);
+					cafeteriaScreen.setCanPass(false);
+					iniScreen.setCanPass(false);
+					scoreScreen.setCanPass(false);
+					canPassScreen = false;
+					setScreen(cafeteriaScreen);
+				} else {
+					if (actualScreen == "score" && canPassScreen) {
+						playScreen.setCanPass(false);
+						biblioScreen.setCanPass(false);
+						cafeteriaScreen.setCanPass(false);
+						iniScreen.setCanPass(false);
+						scoreScreen.setCanPass(false);
+						canPassScreen = false;
+						setScreen(scoreScreen);
+					}else {
+						if (actualScreen == "inicio" && canPassScreen) {
+							playScreen.setCanPass(false);
+							biblioScreen.setCanPass(false);
+							cafeteriaScreen.setCanPass(false);
+							iniScreen.setCanPass(false);
+							scoreScreen.setCanPass(false);
+							canPassScreen = false;
+							setScreen(iniScreen);
+						}
+					}
+				}
 			}
+
 		}
 
 	}

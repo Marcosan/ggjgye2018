@@ -404,4 +404,8 @@ public class NPC {
     public boolean getInfectado(){
         return this.infectado;
     }
+
+    public NPCState getProbabilidad(){
+        return this.probabilidad;
+    }
 }

@@ -60,7 +60,7 @@ public class Tinder extends Image implements InputProcessor {
 
 
         draw(batch, 1);
-        setPosition(posX - 150, posY -125);
+        setPosition(posX - 110, posY -130);
         setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("img/tinder/tinder01" + str + ".png")))));
 
         batch.end();

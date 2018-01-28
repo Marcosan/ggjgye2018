@@ -1,9 +1,7 @@
 package ggl.gye.transmission.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -41,13 +38,13 @@ import ggl.gye.transmission.entities.Tinder;
  * Created by dell on 10/04/17.
  */
 
-public class Play implements Screen {
+public class Biblioteca implements Screen {
     private static final int CAM_SIZE_X = 450;
     private static final int CAM_SIZE_Y = 350;
-    private static final int NUM_NPC = 7;
-    private static final int posIniX = 50*32, posIniY = 70*32, wPlayer = 32, hPlayer = 32;
+    private static final int NUM_NPC = 30;
+    private static final int posIniX = 30*32, posIniY = 70*32, wPlayer = 25, hPlayer = 30;
     private static final int wBanner = 370, hBanner= 70;
-    private static final int wTinder= 170, hTinder= 250;
+    private static final int wTinder= 250, hTinder= 200;
     private static final int wIcon= 15, hIcon= 15;
     private static final int RADIO = 32*3;
     private static final int SEC_SEARCH = 32*3;
@@ -58,20 +55,6 @@ public class Play implements Screen {
     private OrthographicCamera camera;
 
     private TextureAtlas playerAtlas;
-    private TextureAtlas npcAtlas1;
-    private TextureAtlas npcAtlas2;
-    private TextureAtlas npcAtlas3;
-    private TextureAtlas npcAtlas4;
-    private TextureAtlas npcAtlas5;
-    private TextureAtlas npcAtlas6;
-    private TextureAtlas npcAtlas7;
-    private TextureAtlas npcAtlas8;
-    private TextureAtlas npcAtlas9;
-    private TextureAtlas npcAtlas10;
-    private TextureAtlas npcAtlas11;
-    private TextureAtlas npcAtlas12;
-    private TextureAtlas npcAtlas13;
-    private TextureAtlas npcAtlas14;
     private Player player;
 
     private int[] floor1 = new int[] {0}, floor2 = new int[] {1}, floor3 = new int[] {2}, floor4 = new int[] {3},
@@ -107,12 +90,12 @@ public class Play implements Screen {
     private Crono crono;
     private int radio;
 
-    private String goToScreen = "general";
+    private String goToScreen = "biblio";
     private boolean isAuthorized = false;
     private NPCState local_probability;
     private boolean drawTinder;
 
-    public Play(String name, NPCState local_probability) {
+    public Biblioteca(String name, NPCState local_probability) {
         this.local_probability = local_probability;
         this.name_map = name;
     }
@@ -126,8 +109,6 @@ public class Play implements Screen {
 
         wScreen = Gdx.graphics.getWidth();
         hScreen = Gdx.graphics.getHeight();
-        Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/SonidosHumedos.mp3"));
-        mp3Sound.play(0.5f);
 
         renderer = new OrthogonalTiledMapRenderer(map);
         sr = new ShapeRenderer();
@@ -167,38 +148,6 @@ public class Play implements Screen {
         right = new Animation(1f / 4f, playerAtlas.findRegions("right"));
         up = new Animation(1f / 4f, playerAtlas.findRegions("up"));
 
-        npcAtlas1 = new TextureAtlas("img/npc01.pack");
-        Hashtable<String, Animation> animationnpcAtlas1 = new Hashtable<String, Animation>();
-        Animation stillnpcAtlas1, leftnpcAtlas1, rightnpcAtlas1, upnpcAtlas1;
-        stillnpcAtlas1 = new Animation(1f / 4f, npcAtlas1.findRegions("still"));
-        leftnpcAtlas1 = new Animation(1f / 4f, npcAtlas1.findRegions("left"));
-        rightnpcAtlas1 = new Animation(1f / 4f, npcAtlas1.findRegions("right"));
-        upnpcAtlas1 = new Animation(1f / 4f, npcAtlas1.findRegions("up"));
-
-        npcAtlas2 = new TextureAtlas("img/npc02.pack");
-        Hashtable<String, Animation> animationnpcAtlas2 = new Hashtable<String, Animation>();
-        Animation stillnpcAtlas2, leftnpcAtlas2, rightnpcAtlas2, upnpcAtlas2;
-        stillnpcAtlas2 = new Animation(1f / 4f, npcAtlas2.findRegions("still"));
-        leftnpcAtlas2 = new Animation(1f / 4f, npcAtlas2.findRegions("left"));
-        rightnpcAtlas2 = new Animation(1f / 4f, npcAtlas2.findRegions("right"));
-        upnpcAtlas2 = new Animation(1f / 4f, npcAtlas2.findRegions("up"));
-
-        npcAtlas3 = new TextureAtlas("img/npc03.pack");
-        Hashtable<String, Animation> animationnpcAtlas3 = new Hashtable<String, Animation>();
-        Animation stillnpcAtlas3, leftnpcAtlas3, rightnpcAtlas3, upnpcAtlas3;
-        stillnpcAtlas3 = new Animation(1f / 4f, npcAtlas3.findRegions("still"));
-        leftnpcAtlas3 = new Animation(1f / 4f, npcAtlas3.findRegions("left"));
-        rightnpcAtlas3 = new Animation(1f / 4f, npcAtlas3.findRegions("right"));
-        upnpcAtlas3 = new Animation(1f / 4f, npcAtlas3.findRegions("up"));
-
-        npcAtlas4 = new TextureAtlas("img/npc04.pack");
-        Hashtable<String, Animation> animationnpcAtlas4 = new Hashtable<String, Animation>();
-        Animation stillnpcAtlas4, leftnpcAtlas4, rightnpcAtlas4, upnpcAtlas4;
-        stillnpcAtlas4 = new Animation(1f / 4f, npcAtlas4.findRegions("still"));
-        leftnpcAtlas4 = new Animation(1f / 4f, npcAtlas4.findRegions("left"));
-        rightnpcAtlas4 = new Animation(1f / 4f, npcAtlas4.findRegions("right"));
-        upnpcAtlas4 = new Animation(1f / 4f, npcAtlas4.findRegions("up"));
-
         still.setPlayMode(Animation.PlayMode.LOOP);
         left.setPlayMode(Animation.PlayMode.LOOP);
         right.setPlayMode(Animation.PlayMode.LOOP);
@@ -208,26 +157,6 @@ public class Play implements Screen {
         animation.put("left", left);
         animation.put("right", right);
         animation.put("up", up);
-
-        animationnpcAtlas1.put("still", stillnpcAtlas1);
-        animationnpcAtlas1.put("left", leftnpcAtlas1);
-        animationnpcAtlas1.put("right", rightnpcAtlas1);
-        animationnpcAtlas1.put("up", upnpcAtlas1);
-
-        animationnpcAtlas2.put("still", stillnpcAtlas2);
-        animationnpcAtlas2.put("left", leftnpcAtlas2);
-        animationnpcAtlas2.put("right", rightnpcAtlas2);
-        animationnpcAtlas2.put("up", upnpcAtlas2);
-
-        animationnpcAtlas3.put("still", stillnpcAtlas3);
-        animationnpcAtlas3.put("left", leftnpcAtlas3);
-        animationnpcAtlas3.put("right", rightnpcAtlas3);
-        animationnpcAtlas3.put("up", upnpcAtlas3);
-
-        animationnpcAtlas4.put("still", stillnpcAtlas4);
-        animationnpcAtlas4.put("left", leftnpcAtlas4);
-        animationnpcAtlas4.put("right", rightnpcAtlas4);
-        animationnpcAtlas4.put("up", upnpcAtlas4);
 
         //Layers para colision
         collisionLayers = new Array<TiledMapTileLayer>();
@@ -239,23 +168,8 @@ public class Play implements Screen {
                 animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y);
 
         for (int i = 0; i < NUM_NPC; i++){
-            npcList.add(i, new NPC("npc" + i, posIniX+ (64 * i), posIniY + (32 * i), wPlayer, hPlayer,
-                    animationnpcAtlas1, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2,
-                    NPCState.HIGH));
-        }
-        for (int i = 0; i < NUM_NPC; i++){
-            npcList.add(i, new NPC("npc" + i, posIniX+ (32 * i), posIniY + (32 * i), wPlayer, hPlayer,
-                    animationnpcAtlas2, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2,
-                    NPCState.HIGH));
-        }
-        for (int i = 0; i < NUM_NPC; i++){
-            npcList.add(i, new NPC("npc" + i, posIniX+ (64 * -i), posIniY + (32 * i), wPlayer, hPlayer,
-                    animationnpcAtlas3, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2,
-                    NPCState.MEDIUM));
-        }
-        for (int i = 0; i < NUM_NPC; i++){
-            npcList.add(i, new NPC("npc" + i, posIniX+ (32 * -i), posIniY + (32 * i), wPlayer, hPlayer,
-                    animationnpcAtlas4, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2,
+            npcList.add(i, new NPC("npc" + i, posIniX, posIniY, wPlayer, hPlayer,
+                    animation, collisionLayers, wMap, hMap, CAM_SIZE_X, CAM_SIZE_Y, crono, 2+i,
                     NPCState.MEDIUM));
         }
         createTouchpad();
@@ -333,30 +247,16 @@ public class Play implements Screen {
 
 
         //Gdx.input.getX()
-        /*
-        CAMBIOS DE SCREEN
-         */
+
         if(Gdx.input.isTouched()){
             //System.out.println( Gdx.input.getX());
-
-            if (player.getX() > (47 * 32) && player.getX() < (49 * 32)) {
-                if (player.getY() > (87 * 32) && player.getY() < (89 * 32)) {
+            if (player.getX() < 40 && player.getX() > 0)
+                if (player.getY() < 40 && player.getY() > 0) {
                     isAuthorized = true;
-                    goToScreen = "biblio";
+                    goToScreen = "room01";
                 }
-            }
-            if (player.getX() > (55 * 32) && player.getX() < (57 * 32)) {
-                if (player.getY() > (66 * 32) && player.getY() < (68 * 32)) {
-                    isAuthorized = true;
-                    goToScreen = "cafe";
-                }
-            }
             camera.position.set(player.getX(), player.getY(), 0);
         }
-
-        // FIN DE CAMBIOS DE SCREEN
-
-
         renderer.getBatch().begin();
 
         if (crono.getNuSeg() % 1 == 0){
@@ -370,7 +270,7 @@ public class Play implements Screen {
                 }
 
 
-                if (inArea(player.getX(), player.getY(), x_npc, y_npc) && npcList.get(i).getProbabilidad().equals(NPCState.HIGH)){
+                if (inArea(player.getX(), player.getY(), x_npc, y_npc)){
                     npc_around.add(i);
                     //System.out.println("El personaje " + i + " esta cerca");
                     icon_status.draw(renderer.getBatch(), 1);
