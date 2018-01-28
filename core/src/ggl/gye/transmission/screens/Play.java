@@ -86,7 +86,7 @@ public class Play implements Screen {
     private Skin touchpadSkin;
     private Array<TiledMapTileLayer> collisionLayers;
 
-    private Image button, icon_status, icon_infect;
+    private Image button_tinder, icon_status, icon_infect;
     private Banner imageBanner;
     private Tinder imageTinder;
     private Crono crono;
@@ -95,8 +95,10 @@ public class Play implements Screen {
     private String goToScreen = "general";
     private boolean isAuthorized = false;
     private NPCState local_probability;
+    private boolean drawTinder;
 
-    public Play(String name) {
+    public Play(String name, NPCState local_probability) {
+        this.local_probability = local_probability;
         this.name_map = name;
     }
 
@@ -134,6 +136,9 @@ public class Play implements Screen {
         icon_status = new Image(new Texture(Gdx.files.internal("img/tinder/status1.png")));
         icon_status.setSize(wIcon, hIcon);
 
+        button_tinder = new Image(new Texture(Gdx.files.internal("img/tinder/buttontinder.png")));
+        button_tinder.setSize(wIcon+40, hIcon+40);
+
         icon_infect = new Image(new Texture(Gdx.files.internal("img/tinder/infectado.png")));
         icon_infect.setSize(wIcon, hIcon);
 
@@ -170,10 +175,6 @@ public class Play implements Screen {
                     NPCState.MEDIUM));
         }
         createTouchpad();
-    }
-
-    private void createButton(){
-
     }
 
     private void createTouchpad() {
@@ -245,10 +246,10 @@ public class Play implements Screen {
 
 
         imageBanner.drawBanner(renderer.getBatch(), player.getX(), player.getY());
-        imageTinder.drawTinder(renderer.getBatch(), player.getX(), player.getY());
+
 
         //Gdx.input.getX()
-        //(Gdx.input.isTouched()
+
         if(Gdx.input.isTouched()){
             //System.out.println( Gdx.input.getX());
             if (player.getX() < 40 && player.getX() > 0)
@@ -290,8 +291,35 @@ public class Play implements Screen {
             }
 
         }
-        renderer.getBatch().end();
 
+        createButton();
+
+        renderer.getBatch().end();
+        if(Gdx.input.justTouched()){
+            float touch_x = Gdx.input.getX();
+            float touch_y = Gdx.input.getY();
+            System.out.println(touch_x);
+            if (touch_x >= 160 && touch_x <= 300){
+                if (touch_y >= 800 && touch_y <= 960){
+                    if (drawTinder == false)
+                        drawTinder = true;
+                    else
+                        drawTinder = false;
+                }
+            }
+        }
+
+        if (drawTinder){
+            imageTinder.drawTinder(renderer.getBatch(), player.getX(), player.getY());
+        } else {
+            imageTinder.remove();
+        }
+
+    }
+
+    private void createButton(){
+        button_tinder.draw(renderer.getBatch(), 1);
+        button_tinder.setBounds(player.getX() - 200, player.getY() - 115, wIcon + 50, hIcon + 50);
     }
 
     /*

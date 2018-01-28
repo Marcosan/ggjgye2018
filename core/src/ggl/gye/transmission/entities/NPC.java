@@ -323,42 +323,6 @@ public class NPC {
     }
 
 
-    public boolean isMovimiento() {
-        return movimiento;
-    }
-
-    public void setMovimiento(boolean movimiento) {
-        this.movimiento = movimiento;
-    }
-
-
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public float getGravity() {
-        return gravity;
-    }
-
-    public void setGravity(float gravity) {
-        this.gravity = gravity;
-    }
-
-    public TiledMapTileLayer getCollisionLayer() {
-        return collisionLayer;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -366,22 +330,6 @@ public class NPC {
 
     public String getName() {
         return name;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public PlayerState getState() {
-        return state;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public void setState(PlayerState state) {
-        this.state = state;
     }
 
     public float getX() {

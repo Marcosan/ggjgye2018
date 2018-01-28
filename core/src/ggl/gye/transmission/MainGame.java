@@ -2,6 +2,7 @@ package ggl.gye.transmission;
 
 import com.badlogic.gdx.Game;
 
+import ggl.gye.transmission.entities.NPCState;
 import ggl.gye.transmission.screens.Play;
 import ggl.gye.transmission.screens.Room01;
 
@@ -12,7 +13,7 @@ public class MainGame extends Game {
 	private boolean canPassScreen = false;
 	@Override
 	public void create () {
-		playScreen = new Play("eltroestedeaquiveras");
+		playScreen = new Play("eltroestedeaquiveras", NPCState.HIGH);
 		room01Screen  = new Room01("ggjcity");
 		setScreen(playScreen);
 	}
