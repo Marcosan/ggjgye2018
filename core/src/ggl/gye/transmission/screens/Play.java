@@ -3,6 +3,7 @@ package ggl.gye.transmission.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -111,6 +112,7 @@ public class Play implements Screen {
     private boolean isAuthorized = false;
     private NPCState local_probability;
     private boolean drawTinder;
+    private Music rainMusic;
 
     public Play(String name, NPCState local_probability) {
         this.local_probability = local_probability;
